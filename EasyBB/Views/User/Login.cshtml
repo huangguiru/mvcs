@@ -1,0 +1,25 @@
+﻿@model EasyBB.Models.UserLoginDTO
+@{
+    ViewBag.Title = "论坛登录";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h1> ViewBag.Title </h1>
+<form method="post" action="/user/login">
+    <div class="form-group">
+        @Html.LabelFor(m => m.Name)
+        @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Name)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Pwd)
+        @Html.PasswordFor(m => m.Pwd, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Pwd)
+    </div>
+
+    
+
+    <button type="submit" class="btn btn-default">登录</button>
+</form>
+@Scripts.Render("~/bundles/jqueryval")
+
+

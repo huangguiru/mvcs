@@ -1,0 +1,232 @@
+﻿
+@{
+    ViewBag.Title = "菜单管理";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@section head{
+<script>
+    function confirm() {
+        $.messager.confirm('提示','确定要删除该节点吗？',function(r){
+            if (r) {
+                $.post('/admin/handlemenu', { type: 'delete',id:currentRow.id },
+                    function (data) { window.location.href = "/admin/menumanage" }, "json")
+
+            }
+        });
+    }
+                    
+    function formatIsMenu(val,row)
+    {
+        if (val ) {
+            return '<i style="color:green;" class="fa fa-check"></i>';
+        }
+        else {
+            return '<i style="color:red;" class="fa fa-close"></i>';
+        }
+    }
+    
+
+    function formatEnable(val, row) {
+        if (val) {
+            return '<i style="color:green;" class="fa fa-check-circle"></i>';
+        }
+        else {
+            return '<i style="color:red;" class="fa fa-times-circle"></i>';
+        }
+    }
+
+
+
+ 
+
+    $(function () {
+        $('#ff').form({
+            onSubmit: function (param) {
+                param.type = currentContextMenu.name;
+                param.pid = currentRow.pid;
+                param.id = currentRow.id;
+                param.ismenu = currentRow.ismenu;
+                return $(this).form('validate')
+            },
+            success: function (data) {
+                var result = eval('('+data + ')');
+                if (!result.res) {
+                     $.messager.alert('失败',result.msg,'error')
+                }
+                else{
+                    window.location.href = "/admin/menumanage";
+                }
+
+               
+            }
+        });
+    });
+
+
+    var currentRow;
+    function onContextMenu(e, row) {
+        if (row) {
+            currentRow = row;
+            e.preventDefault();
+            $(this).treegrid('select', row.id);
+            $('#mm').menu('enableItem', '#addlevel');
+            $('#mm').menu('enableItem', '#addsubmenu');
+            $('#mm').menu('enableItem', '#addbutton');
+            $('#mm').menu('enableItem', '#edit');
+            $('#mm').menu('enableItem', '#delete');
+            if (row.pid == 0) {//一级菜单
+                $('#mm').menu('disableItem', '#addbutton');
+            } else if(row.pid!=0&&row.ismenu)
+            {//二级菜单
+                $('#mm').menu('disableItem', '#addsubmenu');
+            }
+            else {//按钮
+                $('#mm').menu('disableItem', '#addlevel');
+                $('#mm').menu('disableItem', '#addsubmenu');
+                $('#mm').menu('disableItem', '#addbutton');
+            }
+            $('#mm').menu('show', {
+                left: e.pageX,
+                top: e.pageY
+            });
+        }
+    }
+    var currentContextMenu;
+    function menuHandler(item) {
+        currentContextMenu = item;
+       
+        var title;
+        //alert(item.name + currentRow.id);
+        switch(item.name)
+        {
+            case 'addlevel':
+                title = "新增同级菜单";
+                break;
+
+            case 'addbutton':
+                title = "新增按钮";
+                break;
+            case 'addsubmenu':
+                title = "新增下级菜单";
+                break;
+
+            case 'edit':
+                if (currentRow.ismenu) {
+                    title = "修改菜单";
+                }
+                else {
+                    title = "修改按钮";
+                }
+               
+                $('#menuname').textbox('setValue',currentRow.name);
+                $('#menucontroller').textbox('setValue',currentRow.controller);
+                $('#menuaction').textbox('setValue', currentRow.action);
+                $('#menuenable').checkbox(currentRow.enable?'check':'uncheck');
+                break;
+
+            case 'delete':
+                confirm();
+                return;
+                break;
+                default:
+
+        }
+        $('#operatewindow').window({
+            title:title
+        });
+        $('#operatewindow').window('open');
+    }
+	
+</script>
+    <style>
+        #menutreegrid tr{
+            height:25px;
+        }
+    </style>
+    }
+
+<table id="menutreegrid" class="easyui-treegrid"  style="width:99%"
+       data-options="url: '/admin/LoadMemuTreeGrid' ,
+       method :'get' ,
+       rownumbers: true,
+       idField: 'id' ,
+       treeField :'name',
+       onContextMenu:onContextMenu@*右击菜单事件*@
+       ">
+    <thead>
+        <tr>
+            <th data-options="field:'pid'" width="80" hidden:true">PID</th>
+            <th data-options="field:'id'" width="80">ID</th>
+            <th data-options="field:'name'" width="200" align="left">名称</th>
+            <th data-options="field:'controller'" width="150">控制器</th>
+            <th data-options="field:'action'" width="150">Action</th>
+            <th data-options="field:'ismenu',formatter:formatIsMenu" width="150">是否菜单</th>
+            <th data-options="field:'enable',formatter:formatEnable"   width="150">是否开启</th>
+            <th data-options="field:'addtime'" width="150">添加时间</th>            
+        </tr>
+    </thead>
+</table>
+
+
+<div id="mm" class="easyui-menu" data-options="onClick:menuHandler" style="width:120px;">
+    <div id="addlevel" data-options="name:'addlevel', iconCls:'icon-add' ">新增同级菜单</div>
+    <div id="addsubmenu" data-options="name:'addsubmenu',iconCls:'icon-add'">新增下级菜单</div>
+    <div id="addbutton"  data-options="name:'addbutton',iconCls:'icon-add'">新增按钮</div>
+    <div id="edit" data-options="name:'edit',iconCls:'icon-edit',disabled:true">编辑</div>
+    <div id="delete"  data-options="name:'delete',iconCls:'icon-remove',disabled:true">删除</div>
+    <div>退出</div>
+</div>
+
+<div id="operatewindow" class="easyui-window" title="" data-options="modal:true,closed:true,name:'edit'"
+     style="width:300px;height:285px;padding:10px;">
+
+    <form id="ff" method="post" action="/admin/handlemenu" @*enctype="multipart/form-data"*@>
+        <div style="margin-bottom:10px">
+            <input class="easyui-textbox" name="menuname" id="menuname" style="width:100%" data-options="label:'名称：',required:true"/>
+        </div>
+        <div style="margin-bottom:10px">
+            <input class="easyui-textbox" name="menucontroller" id="menucontroller" style="width:100%" data-options="label:'控制器：',required:true" />
+        </div>
+        <div style="margin-bottom:10px">
+            <input class="easyui-textbox" name="menuaction" id="menuaction" style="width:100%" data-options="label:'Action：',required:true" />
+        </div>
+        <div style="margin-bottom:10px">
+            <input class="easyui-checkbox" name="menuenable" id="menuenable" value="true" data-options="label:'是否启用：'" />
+        </div>
+        <div style="text-align:center;padding:5px 0">
+            <input class="easyui-linkbutton" style="width:80px;height:30px;" type="submit" value="提交" />
+        </div>
+        @*<table>
+            <tr>
+                <td>名称：</td>
+                <td><input name="menuname" class="fa-battery-1 easyui-textbox" /></td>
+            </tr>
+            <tr>
+                <td>控制器：</td>
+                <td><input name="menucontroller" class="fa-battery-1 easyui-textbox" /></td>
+            </tr>
+            <tr>
+                <td>Action：</td>
+                <td><input name="menuaction" class="fa-battery-1 easyui-textbox" /></td>
+            </tr>
+            <tr>
+                <td>是否启用：</td>
+                <td><input name="menuenable" class="easyui-checkbox"  value="true" /></td>
+            </tr>
+            @*<tr>
+                <td>是否菜单：</td>
+                <td><input name="ismenu" class="easyui-checkbox" value="true" /></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input class="easyui-linkbutton"  style="width:80px;height:30px;" type="submit" value="提交"/></td>
+            </tr>
+        </table>*@
+        
+    </form>
+
+
+</div>
+
+

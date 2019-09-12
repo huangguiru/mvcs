@@ -1,0 +1,105 @@
+﻿
+@{
+    ViewBag.Title = "SetPermission";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    var admin = ViewBag.Admin as Admin;
+}
+@section head{
+    <script>
+        $.extend($.fn.treegrid.methods, {
+            //iscontains是否包含父节点（即子节点被选中时是否也取父节点）
+            getAllChecked: function (jq, iscontains) {
+                var keyValues = new Array();
+                /*
+                  tree-checkbox2 有子节点被选中的css
+                  tree-checkbox1 节点被选中的css
+                  tree-checkbox0 节点未选中的css
+                */
+                var checkNodes = jq.treegrid("getPanel").find(".tree-checkbox1");
+                for (var i = 0; i < checkNodes.length; i++) {
+                    var keyValue1 = $($(checkNodes[i]).closest('tr')[0]).attr("node-id");
+                    keyValues.push(keyValue1);
+                }
+
+                if (iscontains) {
+                    var childCheckNodes = jq.treegrid("getPanel").find(".tree-checkbox2");
+                    for (var i = 0; i < childCheckNodes.length; i++) {
+                        var keyValue2 = $($(childCheckNodes[i]).closest('tr')[0]).attr("node-id");
+                        keyValues.push(keyValue2);
+                    }
+                }
+
+                return keyValues;
+            }
+        });
+
+    function formatIsMenu(val, row) {
+        if (val) {
+            return '<i style="color:green;" class="fa fa-check"></i>';
+        }
+        else {
+            return '<i style="color:red;" class="fa fa-close"></i>';
+        }
+    }
+
+    function formatEnable(val, row) {
+        if (val) {
+            return '<i style="color:green;" class="fa fa-check-circle"></i>';
+        }
+        else {
+            return '<i style="color:red;" class="fa fa-times-circle"></i>';
+        }
+    }
+
+    function Savesetting() {
+        debugger
+        var rows=$('#permissiongrid').treegrid('getAllChecked',true);
+        if(rows.length==0){
+            $.messager.alert('提示','请选择一条记录','info');
+            
+        }
+        //var ids = $.map(rows, function (row, index) { return row.id })
+        $.post("/admin/SavePermission", { ids: rows,adminid:@admin.id },
+        function (data) {
+            alert(data);
+
+        },"json");
+    }
+
+    </script>
+    <style>
+        #menutreegrid tr {
+            height: 35px;
+        }
+    </style>
+}
+
+
+<div class="easy-panel" style="padding:5px;">
+    <input class="easyui-linkbutton" style="width:80px;height:30px;" type="button" value="保存" onclick="Savesetting()" />
+    <input class="easyui-linkbutton" style="width:80px;height:30px;" type="button" value="返回" onclick="window.location.href='/admin/adminmanage'" />
+  
+</div>
+
+<table  title="当前管理员：@admin.name" class="easyui-treegrid" style="width:99%" id='permissiongrid'
+       data-options="url:'/admin/LoadPermissionTreeGrid/@admin.id' ,
+       method :'get' ,
+       rownumbers: true,
+       idField: 'id' ,
+       treeField :'name',
+       checkbox:true
+       ">
+
+    <thead>
+        <tr>
+            <th data-options="field:'pid'" width="80" hidden:true">PID</th>
+            <th data-options="field:'id'" width="80" hidden:true>ID</th>
+            <th data-options="field:'name'" width="200" align="left">名称</th>
+            <th data-options="field:'controller'" width="150">控制器</th>
+            <th data-options="field:'action'" width="150">Action</th>
+            <th data-options="field:'ismenu',formatter:formatIsMenu" width="150">是否菜单</th>
+            <th data-options="field:'enable',formatter:formatEnable" width="150">是否开启</th>
+            <th data-options="field:'addtime'" width="150">添加时间</th> 
+        </tr>
+    </thead>
+</table>

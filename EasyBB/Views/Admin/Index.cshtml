@@ -1,0 +1,105 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout =null;
+}
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8" />
+    <title>管理后台</title>
+    <link href="~/Content/jquery-easyui-1.6.11/themes/default/easyui.css" rel="stylesheet" />
+    <link href="~/Content/jquery-easyui-1.6.11/themes/icon.css" rel="stylesheet" />
+    <script src="~/Content/jquery-easyui-1.6.11/jquery.min.js"></script>
+    <script src="~/Content/jquery-easyui-1.6.11/jquery.easyui.min.js"></script>
+    <link href="~/Content/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    <script type="text/javascript">
+        $(function () {
+            //实例化树形菜单
+            $("#menutree").tree({
+                //data: treeData,
+                lines: true,
+                onClick: function (node) {
+                    debugger
+                    if (node.attributes) {
+                        Open(node.text, node.attributes.url);
+                    }
+                }
+            })
+        });
+        function Open(text, url) {
+            if ($("#pagetabs").tabs('exists', text)) {
+                $("#pagetabs").tabs('select', text);
+            } else {
+                $('#pagetabs').tabs('add', {
+                    title: text,
+                    closable: true,
+                    content: '<iframe scrolling="auto" width="100%" height="100%" frameborder="0" src="' + url + '" style="width:100%;height:100%;margin:0px 0px;"></iframe>'
+                });
+            }
+        }
+
+    </script>
+</head>
+<body class="easyui-layout">
+    <div data-options="region:'north',border:false" style="height:60px;background:#000;padding:8px;color:#fff">
+        <i class="fa fa-3x fa-magic"></i>EasyBB论坛管理
+    </div>
+    <div data-options="region:'west',split:true,title:'我的菜单'" style="width:200px;padding:0px;">
+        <ul id="menutree" class="easyui-tree" data-options="url:'/admin/loadmemu',method:'get',animate:true"></ul>
+
+        @*<ul class="easyui-tree" id="menutree">
+                <li>
+                    <span>用户管理</span>
+                    <ul>
+                        <li data-options="state:'closed'">
+                            <span>Photos</span>
+                            <ul>
+                                <li>
+                                    <span>Friend</span>
+                                </li>
+                                <li>
+                                    <span>Wife</span>
+                                </li>
+                                <li>
+                                    <span>Company</span>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <span>Program Files</span>
+                            <ul>
+                                <li>Intel</li>
+                                <li>Java</li>
+                                <li>Microsoft Office</li>
+                                <li>Games</li>
+                            </ul>
+                        </li>
+                        <li>index.html</li>
+                        <li>管理员管理</li>
+                        <li>菜单管理</li>
+                    </ul>
+                </li>
+            </ul>*@
+
+
+
+
+
+    </div>
+
+    <div data-options="region:'south',border:false"
+         style="height:30px;background:#fff;padding-top:5px;">
+        &copy; @DateTime.Now.Year - 我的 ASP.NET 应用程序
+    </div>
+    <div class="easyui-tabs" id="pagetabs" data-options="region:'center',title:''">
+
+
+    </div>
+
+
+</body>
+</html>
+

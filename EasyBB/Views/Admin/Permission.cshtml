@@ -1,0 +1,73 @@
+﻿
+@{
+    ViewBag.Title = "Permission";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+@section head{ 
+<link href="~/Content/zTree_v3/css/demo.css" rel="stylesheet" />
+<script src="~/Content/zTree_v3/js/jquery-1.4.4.min.js"></script>
+<link href="~/Content/zTree_v3/css/zTreeStyle/zTreeStyle.css" rel="stylesheet" />
+<script src="~/Content/zTree_v3/js/jquery.ztree.core.js"></script>
+<script src="~/Content/zTree_v3/js/jquery.ztree.excheck.js"></script>
+
+<SCRIPT type="text/javascript">
+		var setting = {
+			check: {
+			    enable: true,
+			   chkboxType : { "Y": "ps", "N": "ps" }//初始化子父级关联
+			},
+			data: {
+				simpleData: {
+					enable: true
+				}
+			}
+		};
+    //数据
+		var zNodes =[
+			{ id:1, pId:0, name:"随意勾选 1", open:true},
+			{ id:11, pId:1, name:"随意勾选 1-1", open:true},
+			{ id:111, pId:11, name:"随意勾选 1-1-1"},
+			{ id:112, pId:11, name:"随意勾选 1-1-2"},
+			{ id:12, pId:1, name:"随意勾选 1-2", open:true},
+			{ id:121, pId:12, name:"随意勾选 1-2-1"},
+			{ id:122, pId:12, name:"随意勾选 1-2-2"},
+			{ id:2, pId:0, name:"随意勾选 2", checked:true, open:true},
+			{ id:21, pId:2, name:"随意勾选 2-1"},
+			{ id:22, pId:2, name:"随意勾选 2-2", open:true},
+			{ id:221, pId:22, name:"随意勾选 2-2-1", checked:true},
+			{ id:222, pId:22, name:"随意勾选 2-2-2"},
+			{ id:23, pId:2, name:"随意勾选 2-3"}
+		];
+
+		//var code;
+
+		//function setCheck() {
+		//	var zTree = $.fn.zTree.getZTreeObj("treeDemo"),
+		//	py = $("#py").attr("checked")? "p":"",
+		//	sy = $("#sy").attr("checked")? "s":"",
+		//	pn = $("#pn").attr("checked")? "p":"",
+		//	sn = $("#sn").attr("checked")? "s":"",
+		//	type = { "Y":py + sy, "N":pn + sn};
+		//	zTree.setting.check.chkboxType = type;
+		//	showCode('setting.check.chkboxType = { "Y" : "' + type.Y + '", "N" : "' + type.N + '" };');
+		//}
+		//function showCode(str) {
+		//	if (!code) code = $("#code");
+		//	code.empty();
+		//	code.append("<li>"+str+"</li>");
+		//}
+
+		$(document).ready(function () {
+		   // setting.check.chkboxType = { "Y": "ps", "N": "ps" };
+			$.fn.zTree.init($("#treeDemo"), setting, zNodes);
+			//setCheck();
+			//$("#py").bind("change", setCheck);
+			//$("#sy").bind("change", setCheck);
+			//$("#pn").bind("change", setCheck);
+			//$("#sn").bind("change", setCheck);
+		});		
+</SCRIPT>
+}
+<h2>Permission</h2>
+<ul id="treeDemo" class="ztree"></ul>
+

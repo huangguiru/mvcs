@@ -1,0 +1,96 @@
+﻿
+@{
+    ViewBag.Title = "UserList";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<table id="dg"
+       data-options="rownumbers:true,singleSelect:true,pagination:true,url:'getuserlist',method:'get'">
+    <thead>
+        <tr>
+            <th data-options="field:'id',width:80">ID</th>
+            <th data-options="field:'name',width:100">用户名</th>
+            <th data-options="field:'addtime',width:80,align:'right',formatter:formatDatetime">添加时间</th>
+            <th data-options="field:'niname',width:80,align:'right'">昵称</th>
+            <th data-options="field:'email',width:240">电子邮件</th>
+            <th data-options="field:'status',width:60,align:'center',formatter:formatStatus">状态</th>
+            <th data-options="field:'_operate',width:80,align:'center',formatter:formatOper">操作</th>
+        </tr>
+    </thead>
+</table>
+    
+
+    <script type="text/javascript">
+     
+
+        function SetStatus(status, id) {
+            var opr = status == 1 ? "禁用" : "启用";
+            $.messager.confirm('友情提示', '是否要' + opr + '?', function (r) {
+                if (r) {
+                    $.post("SetStatus", { "status": status, "id": id },
+                   function (data) {
+                       if (data.res == 1) {
+                           $('#dg').datagrid('reload');//刷新
+                       }
+                       else {
+                           $.messager.alert('操作失败。');
+                       }
+                   }, "json");
+                }
+            });
+        }
+
+        function formatOper(val, row) {
+            var res = "";
+            res += '<a href="#" onclick="editUser(' + val + ')">修改</a>';
+            res += '&nbsp;&nbsp;';
+            if (row.status == 1) {
+                res += '<a href="#" onclick="SetStatus(' + row.status + ',' + row.id + ')">禁用</a>';
+            }
+            else {
+                res += '<a href="#" onclick="SetStatus(' + row.status + ',' + row.id + ')">启用</a>';
+            }
+            return res;
+        }
+
+
+        function formatStatus(val, row) {
+            if (val == 1) {
+                return '<span class="icon-ok">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>';
+            } else {
+                return '<span class="icon-no">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>';
+            }
+        }
+
+        function formatDatetime(value, row) {
+            var dateMat = new Date(parseInt(value.replace("/Date(", "").replace(")/", ""), 10));
+            var year = dateMat.getFullYear();
+            var month = dateMat.getMonth() + 1;
+            var day = dateMat.getDate();
+            return year + "-" + month + "-" + day;
+        }
+
+
+        $(function () {
+            var pager = $('#dg').datagrid().datagrid('getPager');	// get the pager of datagrid
+            pager.pagination({
+                buttons: [{
+                    iconCls: 'icon-search',
+                    handler: function () {
+                        alert('search');
+                    }
+                }, {
+                    iconCls: 'icon-add',
+                    handler: function () {
+                        alert('add');
+                    }
+                }, {
+                    iconCls: 'icon-edit',
+                    handler: function () {
+                        alert('edit');
+                    }
+                }]
+            });
+        })
+    </script>
+
