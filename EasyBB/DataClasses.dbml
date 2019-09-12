@@ -35,21 +35,6 @@
       <Column Name="addtime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
     </Type>
   </Table>
-  <Table Name="dbo.Board" Member="Board">
-    <Type Name="Board">
-      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="name" Type="System.String" DbType="NVarChar(150) NOT NULL" CanBeNull="false" />
-      <Column Name="intro" Type="System.String" DbType="NVarChar(4000) NOT NULL" CanBeNull="false" />
-      <Column Name="lastthemeid" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="lastlthemetime" Type="System.String" DbType="NVarChar(150) NOT NULL" CanBeNull="false" />
-      <Column Name="lastuserid" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="lastthemetime" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="status" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="themescount" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
-      <Column Name="postcount" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
-      <Column Name="avatar" Type="System.String" DbType="NVarChar(150) NOT NULL" CanBeNull="false" />
-    </Type>
-  </Table>
   <Table Name="dbo.Posts" Member="Posts">
     <Type Name="Posts">
       <Column Name="id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
@@ -100,6 +85,22 @@
       <Column Name="points" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
       <Column Name="userlever" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="email" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Board" Member="Board">
+    <Type Name="Board">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="NVarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="addtime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="intro" Type="System.String" DbType="NVarChar(4000) NOT NULL" CanBeNull="false" />
+      <Column Name="lastthemeid" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="lastlthemetime" Type="System.String" DbType="NVarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="lastuserid" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="lastthemetime" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="status" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="themescount" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="postcount" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="avatar" Type="System.String" DbType="NVarChar(150) NOT NULL" CanBeNull="false" />
     </Type>
   </Table>
 </Database>

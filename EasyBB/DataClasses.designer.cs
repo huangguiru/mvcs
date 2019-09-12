@@ -39,15 +39,15 @@ namespace EasyBB
     partial void InsertPermission(Permission instance);
     partial void UpdatePermission(Permission instance);
     partial void DeletePermission(Permission instance);
-    partial void InsertBoard(Board instance);
-    partial void UpdateBoard(Board instance);
-    partial void DeleteBoard(Board instance);
     partial void InsertThems(Thems instance);
     partial void UpdateThems(Thems instance);
     partial void DeleteThems(Thems instance);
     partial void InsertUser(User instance);
     partial void UpdateUser(User instance);
     partial void DeleteUser(User instance);
+    partial void InsertBoard(Board instance);
+    partial void UpdateBoard(Board instance);
+    partial void DeleteBoard(Board instance);
     #endregion
 		
 		public DataClassesDataContext() : 
@@ -104,14 +104,6 @@ namespace EasyBB
 			}
 		}
 		
-		public System.Data.Linq.Table<Board> Board
-		{
-			get
-			{
-				return this.GetTable<Board>();
-			}
-		}
-		
 		public System.Data.Linq.Table<Posts> Posts
 		{
 			get
@@ -133,6 +125,14 @@ namespace EasyBB
 			get
 			{
 				return this.GetTable<User>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Board> Board
+		{
+			get
+			{
+				return this.GetTable<Board>();
 			}
 		}
 	}
@@ -778,308 +778,6 @@ namespace EasyBB
 					this._addtime = value;
 					this.SendPropertyChanged("addtime");
 					this.OnaddtimeChanged();
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Board")]
-	public partial class Board : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _id;
-		
-		private string _name;
-		
-		private string _intro;
-		
-		private int _lastthemeid;
-		
-		private string _lastlthemetime;
-		
-		private int _lastuserid;
-		
-		private int _lastthemetime;
-		
-		private int _status;
-		
-		private long _themescount;
-		
-		private long _postcount;
-		
-		private string _avatar;
-		
-    #region 可扩展性方法定义
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnidChanging(int value);
-    partial void OnidChanged();
-    partial void OnnameChanging(string value);
-    partial void OnnameChanged();
-    partial void OnintroChanging(string value);
-    partial void OnintroChanged();
-    partial void OnlastthemeidChanging(int value);
-    partial void OnlastthemeidChanged();
-    partial void OnlastlthemetimeChanging(string value);
-    partial void OnlastlthemetimeChanged();
-    partial void OnlastuseridChanging(int value);
-    partial void OnlastuseridChanged();
-    partial void OnlastthemetimeChanging(int value);
-    partial void OnlastthemetimeChanged();
-    partial void OnstatusChanging(int value);
-    partial void OnstatusChanged();
-    partial void OnthemescountChanging(long value);
-    partial void OnthemescountChanged();
-    partial void OnpostcountChanging(long value);
-    partial void OnpostcountChanged();
-    partial void OnavatarChanging(string value);
-    partial void OnavatarChanged();
-    #endregion
-		
-		public Board()
-		{
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int id
-		{
-			get
-			{
-				return this._id;
-			}
-			set
-			{
-				if ((this._id != value))
-				{
-					this.OnidChanging(value);
-					this.SendPropertyChanging();
-					this._id = value;
-					this.SendPropertyChanged("id");
-					this.OnidChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_name", DbType="NVarChar(150) NOT NULL", CanBeNull=false)]
-		public string name
-		{
-			get
-			{
-				return this._name;
-			}
-			set
-			{
-				if ((this._name != value))
-				{
-					this.OnnameChanging(value);
-					this.SendPropertyChanging();
-					this._name = value;
-					this.SendPropertyChanged("name");
-					this.OnnameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_intro", DbType="NVarChar(4000) NOT NULL", CanBeNull=false)]
-		public string intro
-		{
-			get
-			{
-				return this._intro;
-			}
-			set
-			{
-				if ((this._intro != value))
-				{
-					this.OnintroChanging(value);
-					this.SendPropertyChanging();
-					this._intro = value;
-					this.SendPropertyChanged("intro");
-					this.OnintroChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_lastthemeid", DbType="Int NOT NULL")]
-		public int lastthemeid
-		{
-			get
-			{
-				return this._lastthemeid;
-			}
-			set
-			{
-				if ((this._lastthemeid != value))
-				{
-					this.OnlastthemeidChanging(value);
-					this.SendPropertyChanging();
-					this._lastthemeid = value;
-					this.SendPropertyChanged("lastthemeid");
-					this.OnlastthemeidChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_lastlthemetime", DbType="NVarChar(150) NOT NULL", CanBeNull=false)]
-		public string lastlthemetime
-		{
-			get
-			{
-				return this._lastlthemetime;
-			}
-			set
-			{
-				if ((this._lastlthemetime != value))
-				{
-					this.OnlastlthemetimeChanging(value);
-					this.SendPropertyChanging();
-					this._lastlthemetime = value;
-					this.SendPropertyChanged("lastlthemetime");
-					this.OnlastlthemetimeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_lastuserid", DbType="Int NOT NULL")]
-		public int lastuserid
-		{
-			get
-			{
-				return this._lastuserid;
-			}
-			set
-			{
-				if ((this._lastuserid != value))
-				{
-					this.OnlastuseridChanging(value);
-					this.SendPropertyChanging();
-					this._lastuserid = value;
-					this.SendPropertyChanged("lastuserid");
-					this.OnlastuseridChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_lastthemetime", DbType="Int NOT NULL")]
-		public int lastthemetime
-		{
-			get
-			{
-				return this._lastthemetime;
-			}
-			set
-			{
-				if ((this._lastthemetime != value))
-				{
-					this.OnlastthemetimeChanging(value);
-					this.SendPropertyChanging();
-					this._lastthemetime = value;
-					this.SendPropertyChanged("lastthemetime");
-					this.OnlastthemetimeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_status", DbType="Int NOT NULL")]
-		public int status
-		{
-			get
-			{
-				return this._status;
-			}
-			set
-			{
-				if ((this._status != value))
-				{
-					this.OnstatusChanging(value);
-					this.SendPropertyChanging();
-					this._status = value;
-					this.SendPropertyChanged("status");
-					this.OnstatusChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_themescount", DbType="BigInt NOT NULL")]
-		public long themescount
-		{
-			get
-			{
-				return this._themescount;
-			}
-			set
-			{
-				if ((this._themescount != value))
-				{
-					this.OnthemescountChanging(value);
-					this.SendPropertyChanging();
-					this._themescount = value;
-					this.SendPropertyChanged("themescount");
-					this.OnthemescountChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_postcount", DbType="BigInt NOT NULL")]
-		public long postcount
-		{
-			get
-			{
-				return this._postcount;
-			}
-			set
-			{
-				if ((this._postcount != value))
-				{
-					this.OnpostcountChanging(value);
-					this.SendPropertyChanging();
-					this._postcount = value;
-					this.SendPropertyChanged("postcount");
-					this.OnpostcountChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_avatar", DbType="NVarChar(150) NOT NULL", CanBeNull=false)]
-		public string avatar
-		{
-			get
-			{
-				return this._avatar;
-			}
-			set
-			{
-				if ((this._avatar != value))
-				{
-					this.OnavatarChanging(value);
-					this.SendPropertyChanging();
-					this._avatar = value;
-					this.SendPropertyChanged("avatar");
-					this.OnavatarChanged();
 				}
 			}
 		}
@@ -2059,6 +1757,332 @@ namespace EasyBB
 					this._email = value;
 					this.SendPropertyChanged("email");
 					this.OnemailChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Board")]
+	public partial class Board : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _id;
+		
+		private string _name;
+		
+		private System.DateTime _addtime;
+		
+		private string _intro;
+		
+		private int _lastthemeid;
+		
+		private string _lastlthemetime;
+		
+		private int _lastuserid;
+		
+		private int _lastthemetime;
+		
+		private int _status;
+		
+		private long _themescount;
+		
+		private long _postcount;
+		
+		private string _avatar;
+		
+    #region 可扩展性方法定义
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidChanging(int value);
+    partial void OnidChanged();
+    partial void OnnameChanging(string value);
+    partial void OnnameChanged();
+    partial void OnaddtimeChanging(System.DateTime value);
+    partial void OnaddtimeChanged();
+    partial void OnintroChanging(string value);
+    partial void OnintroChanged();
+    partial void OnlastthemeidChanging(int value);
+    partial void OnlastthemeidChanged();
+    partial void OnlastlthemetimeChanging(string value);
+    partial void OnlastlthemetimeChanged();
+    partial void OnlastuseridChanging(int value);
+    partial void OnlastuseridChanged();
+    partial void OnlastthemetimeChanging(int value);
+    partial void OnlastthemetimeChanged();
+    partial void OnstatusChanging(int value);
+    partial void OnstatusChanged();
+    partial void OnthemescountChanging(long value);
+    partial void OnthemescountChanged();
+    partial void OnpostcountChanging(long value);
+    partial void OnpostcountChanged();
+    partial void OnavatarChanging(string value);
+    partial void OnavatarChanged();
+    #endregion
+		
+		public Board()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int id
+		{
+			get
+			{
+				return this._id;
+			}
+			set
+			{
+				if ((this._id != value))
+				{
+					this.OnidChanging(value);
+					this.SendPropertyChanging();
+					this._id = value;
+					this.SendPropertyChanged("id");
+					this.OnidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_name", DbType="NVarChar(150) NOT NULL", CanBeNull=false)]
+		public string name
+		{
+			get
+			{
+				return this._name;
+			}
+			set
+			{
+				if ((this._name != value))
+				{
+					this.OnnameChanging(value);
+					this.SendPropertyChanging();
+					this._name = value;
+					this.SendPropertyChanged("name");
+					this.OnnameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_addtime", DbType="DateTime NOT NULL")]
+		public System.DateTime addtime
+		{
+			get
+			{
+				return this._addtime;
+			}
+			set
+			{
+				if ((this._addtime != value))
+				{
+					this.OnaddtimeChanging(value);
+					this.SendPropertyChanging();
+					this._addtime = value;
+					this.SendPropertyChanged("addtime");
+					this.OnaddtimeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_intro", DbType="NVarChar(4000) NOT NULL", CanBeNull=false)]
+		public string intro
+		{
+			get
+			{
+				return this._intro;
+			}
+			set
+			{
+				if ((this._intro != value))
+				{
+					this.OnintroChanging(value);
+					this.SendPropertyChanging();
+					this._intro = value;
+					this.SendPropertyChanged("intro");
+					this.OnintroChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_lastthemeid", DbType="Int NOT NULL")]
+		public int lastthemeid
+		{
+			get
+			{
+				return this._lastthemeid;
+			}
+			set
+			{
+				if ((this._lastthemeid != value))
+				{
+					this.OnlastthemeidChanging(value);
+					this.SendPropertyChanging();
+					this._lastthemeid = value;
+					this.SendPropertyChanged("lastthemeid");
+					this.OnlastthemeidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_lastlthemetime", DbType="NVarChar(150) NOT NULL", CanBeNull=false)]
+		public string lastlthemetime
+		{
+			get
+			{
+				return this._lastlthemetime;
+			}
+			set
+			{
+				if ((this._lastlthemetime != value))
+				{
+					this.OnlastlthemetimeChanging(value);
+					this.SendPropertyChanging();
+					this._lastlthemetime = value;
+					this.SendPropertyChanged("lastlthemetime");
+					this.OnlastlthemetimeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_lastuserid", DbType="Int NOT NULL")]
+		public int lastuserid
+		{
+			get
+			{
+				return this._lastuserid;
+			}
+			set
+			{
+				if ((this._lastuserid != value))
+				{
+					this.OnlastuseridChanging(value);
+					this.SendPropertyChanging();
+					this._lastuserid = value;
+					this.SendPropertyChanged("lastuserid");
+					this.OnlastuseridChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_lastthemetime", DbType="Int NOT NULL")]
+		public int lastthemetime
+		{
+			get
+			{
+				return this._lastthemetime;
+			}
+			set
+			{
+				if ((this._lastthemetime != value))
+				{
+					this.OnlastthemetimeChanging(value);
+					this.SendPropertyChanging();
+					this._lastthemetime = value;
+					this.SendPropertyChanged("lastthemetime");
+					this.OnlastthemetimeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_status", DbType="Int NOT NULL")]
+		public int status
+		{
+			get
+			{
+				return this._status;
+			}
+			set
+			{
+				if ((this._status != value))
+				{
+					this.OnstatusChanging(value);
+					this.SendPropertyChanging();
+					this._status = value;
+					this.SendPropertyChanged("status");
+					this.OnstatusChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_themescount", DbType="BigInt NOT NULL")]
+		public long themescount
+		{
+			get
+			{
+				return this._themescount;
+			}
+			set
+			{
+				if ((this._themescount != value))
+				{
+					this.OnthemescountChanging(value);
+					this.SendPropertyChanging();
+					this._themescount = value;
+					this.SendPropertyChanged("themescount");
+					this.OnthemescountChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_postcount", DbType="BigInt NOT NULL")]
+		public long postcount
+		{
+			get
+			{
+				return this._postcount;
+			}
+			set
+			{
+				if ((this._postcount != value))
+				{
+					this.OnpostcountChanging(value);
+					this.SendPropertyChanging();
+					this._postcount = value;
+					this.SendPropertyChanged("postcount");
+					this.OnpostcountChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_avatar", DbType="NVarChar(150) NOT NULL", CanBeNull=false)]
+		public string avatar
+		{
+			get
+			{
+				return this._avatar;
+			}
+			set
+			{
+				if ((this._avatar != value))
+				{
+					this.OnavatarChanging(value);
+					this.SendPropertyChanging();
+					this._avatar = value;
+					this.SendPropertyChanged("avatar");
+					this.OnavatarChanged();
 				}
 			}
 		}

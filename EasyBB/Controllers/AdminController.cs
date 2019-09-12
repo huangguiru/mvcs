@@ -409,9 +409,46 @@ namespace EasyBB.Controllers
             return Json(new { res = res }, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult BorarList()
+        public ActionResult BoardList()
         {
             return View();
+        }
+
+        [HttpGet]
+        public ActionResult GetBoardList(int page,int rows)
+        {
+            var list = linqHelper.GetListByPage<Board>(page, rows);
+            var total = linqHelper.Count<Board>();
+            return Json(new { total = total, rows = list }, JsonRequestBehavior.AllowGet);
+
+        }
+
+        [HttpPost]
+        public ActionResult AddBoard(string name,string intro,string avatar,int? status)
+        {
+
+            try
+            {
+                var board = new Board();
+                board.addtime = DateTime.Now;
+                board.avatar = avatar;
+                board.intro = intro;
+                board.lastthemeid= 0;
+                board.lastlthemetime = DateTime.Now.ToString();
+                board.lastthemetime = 0;
+                board.lastuserid = 0;
+                board.name = name;
+                board.status = 1;
+                board.themescount = 0;
+                linqHelper.InsertEntity<Board>(board);
+                return RedirectToAction("BoardList");
+
+            }
+            catch (Exception)
+            {
+
+                return Json(false, JsonRequestBehavior.AllowGet);
+            }
         }
 
     }

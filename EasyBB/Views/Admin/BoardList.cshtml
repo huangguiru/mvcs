@@ -1,27 +1,44 @@
-﻿
-@{
-    ViewBag.Title = "UserList";
+﻿@{
+    ViewBag.Title = "板块列表";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
 <table id="dg"
-       data-options="rownumbers:true,singleSelect:true,pagination:true,url:'getuserlist',method:'get'">
+       data-options="rownumbers:true,singleSelect:true,pagination:true,url:'getboardlist',method:'get'">
     <thead>
         <tr>
             <th data-options="field:'id',width:80">ID</th>
-            <th data-options="field:'name',width:100">用户名</th>
-            <th data-options="field:'addtime',width:80,align:'right',formatter:formatDatetime">添加时间</th>
-            <th data-options="field:'niname',width:80,align:'right'">昵称</th>
-            <th data-options="field:'email',width:240">电子邮件</th>
+            <th data-options="field:'name',width:100">名称</th>
+            <th data-options="field:'addtime',width:80,align:'right',formatter:formatDatetime">添加时间</th>       
             <th data-options="field:'status',width:60,align:'center',formatter:formatStatus">状态</th>
             <th data-options="field:'_operate',width:80,align:'center',formatter:formatOper">操作</th>
         </tr>
     </thead>
 </table>
-    
 
+<div id="opratewindow" class="easyui-window" title="新增板块" data-options="modal:true,closed:true,name:'edit'"
+     style="width:300px;height:285px;padding:10px;">
+
+    <form id="ff" method="post" action="/admin/addboard" @*enctype="multipart/form-data"*@>
+        <div style="margin-bottom:10px">
+            <input class="easyui-textbox" name="name" id="name" style="width:100%" data-options="label:'名称：',required:true" />
+        </div>
+        <div style="margin-bottom:10px">
+            <input class="easyui-textbox" name="intro" id="menucontroller" style="width:100%" data-options="label:'描述：',required:true" />
+        </div>
+        <div style="margin-bottom:10px">
+            <input class="easyui-textbox" name="avatar" id="menuaction" style="width:100%" data-options="label:'图片：',required:true" />
+        </div>
+        <div style="margin-bottom:10px">
+            <input class="easyui-checkbox" name="status" id="menuenable" value="true" data-options="label:'是否启用：'" />
+        </div>
+        <div style="text-align:center;padding:5px 0">
+            <input class="easyui-linkbutton" style="width:80px;height:30px;" type="submit" value="提交" />
+        </div>
+    </form>
+    </div>
     <script type="text/javascript">
-     
+
 
         function SetStatus(status, id) {
             var opr = status == 1 ? "禁用" : "启用";
@@ -42,7 +59,7 @@
 
         function formatOper(val, row) {
             var res = "";
-            res += '<a href="#" onclick="editUser(' + val + ')">修改</a>';
+            res += '<a href="#" onclick="editBoard(' + val + ')">修改</a>';
             res += '&nbsp;&nbsp;';
             if (row.status == 1) {
                 res += '<a href="#" onclick="SetStatus(' + row.status + ',' + row.id + ')">禁用</a>';
@@ -53,15 +70,16 @@
             return res;
         }
 
-        function editUser(index) {
+        function editBoard(index) {
             $('#dg').datagrid('selectRow', index);// 关键在这里
             var row = $('#dg').datagrid('getSelected');
             if (row) {
-                $('#dlg').dialog('open').dialog('setTitle', '修改学生信息');
+                $('#dlg').dialog('open').dialog('setTitle', '修改板块信息');
                 $('#fm').form('load', row);
                 url = '${ctx}updateStudent.do?id=' + row.id;
             }
         }
+
 
         function formatStatus(val, row) {
             if (val == 1) {
@@ -86,17 +104,18 @@
                 buttons: [{
                     iconCls: 'icon-search',
                     handler: function () {
-                        alert('search');
+                        //alert('search');
                     }
                 }, {
                     iconCls: 'icon-add',
                     handler: function () {
-                        alert('add');
+                        //alert('add');
+                        $('#opratewindow').window('open');
                     }
                 }, {
                     iconCls: 'icon-edit',
                     handler: function () {
-                        alert('edit');
+                        // alert('edit');
                     }
                 }]
             });

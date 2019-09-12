@@ -230,7 +230,7 @@
     <Content Include="Views\Shared\ShowErrors.cshtml" />
     <Content Include="Views\Admin\UserList.cshtml" />
     <Content Include="Views\User\Login.cshtml" />
-    <Content Include="Views\Admin\BorarList.cshtml" />
+    <Content Include="Views\Admin\BoardList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\font-awesome-4.7.0\" />
