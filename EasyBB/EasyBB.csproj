@@ -154,6 +154,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeBaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ThemeController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Cores\IPHelper.cs" />
     <Compile Include="Cores\LinqHelper.cs" />
@@ -171,6 +172,7 @@
     <Compile Include="Models\AdminDTO.cs" />
     <Compile Include="Models\UserLoginDTO.cs" />
     <Compile Include="Models\AdminLoginDTO.cs" />
+    <Compile Include="Models\ViewModels\ThemeViewModel.cs" />
     <Compile Include="Models\ViewModels\UserRegistViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -231,6 +233,8 @@
     <Content Include="Views\Admin\UserList.cshtml" />
     <Content Include="Views\User\Login.cshtml" />
     <Content Include="Views\Admin\BoardList.cshtml" />
+    <Content Include="Views\Home\Board.cshtml" />
+    <Content Include="Views\Theme\Add.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\font-awesome-4.7.0\" />

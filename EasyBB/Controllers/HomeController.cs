@@ -10,7 +10,15 @@ namespace EasyBB.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+           var list= linqHelper.GetList<Board>(m => m.status == 1);
+            return View(list);
+        }
+        public ActionResult Board(int id,int p=1)
+        {
+            var list = linqHelper.GetListByPage<Thems>(p,5);
+            ViewBag.Board = linqHelper.GetEntity<Board>(m => m.id == id);
+            ViewBag.Total = linqHelper.Count<Thems>();
+            return View(list);
         }
 
         public ActionResult About()
