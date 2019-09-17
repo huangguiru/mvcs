@@ -48,6 +48,9 @@ namespace EasyBB
     partial void InsertBoard(Board instance);
     partial void UpdateBoard(Board instance);
     partial void DeleteBoard(Board instance);
+    partial void InsertPosts(Posts instance);
+    partial void UpdatePosts(Posts instance);
+    partial void DeletePosts(Posts instance);
     #endregion
 		
 		public DataClassesDataContext() : 
@@ -104,14 +107,6 @@ namespace EasyBB
 			}
 		}
 		
-		public System.Data.Linq.Table<Posts> Posts
-		{
-			get
-			{
-				return this.GetTable<Posts>();
-			}
-		}
-		
 		public System.Data.Linq.Table<Thems> Thems
 		{
 			get
@@ -133,6 +128,14 @@ namespace EasyBB
 			get
 			{
 				return this.GetTable<Board>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Posts> Posts
+		{
+			get
+			{
+				return this.GetTable<Posts>();
 			}
 		}
 	}
@@ -799,213 +802,6 @@ namespace EasyBB
 			if ((this.PropertyChanged != null))
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Posts")]
-	public partial class Posts
-	{
-		
-		private int _id;
-		
-		private string _content;
-		
-		private int _level;
-		
-		private int _userid;
-		
-		private int _borderid;
-		
-		private System.DateTime _addtime;
-		
-		private int _status;
-		
-		private long _ups;
-		
-		private long _downs;
-		
-		private long _collectcount;
-		
-		private int _themeid;
-		
-		public Posts()
-		{
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", DbType="Int NOT NULL")]
-		public int id
-		{
-			get
-			{
-				return this._id;
-			}
-			set
-			{
-				if ((this._id != value))
-				{
-					this._id = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_content", DbType="NText NOT NULL", CanBeNull=false, UpdateCheck=UpdateCheck.Never)]
-		public string content
-		{
-			get
-			{
-				return this._content;
-			}
-			set
-			{
-				if ((this._content != value))
-				{
-					this._content = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[level]", Storage="_level", DbType="Int NOT NULL")]
-		public int level
-		{
-			get
-			{
-				return this._level;
-			}
-			set
-			{
-				if ((this._level != value))
-				{
-					this._level = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_userid", DbType="Int NOT NULL")]
-		public int userid
-		{
-			get
-			{
-				return this._userid;
-			}
-			set
-			{
-				if ((this._userid != value))
-				{
-					this._userid = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_borderid", DbType="Int NOT NULL")]
-		public int borderid
-		{
-			get
-			{
-				return this._borderid;
-			}
-			set
-			{
-				if ((this._borderid != value))
-				{
-					this._borderid = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_addtime", DbType="DateTime NOT NULL")]
-		public System.DateTime addtime
-		{
-			get
-			{
-				return this._addtime;
-			}
-			set
-			{
-				if ((this._addtime != value))
-				{
-					this._addtime = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_status", DbType="Int NOT NULL")]
-		public int status
-		{
-			get
-			{
-				return this._status;
-			}
-			set
-			{
-				if ((this._status != value))
-				{
-					this._status = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ups", DbType="BigInt NOT NULL")]
-		public long ups
-		{
-			get
-			{
-				return this._ups;
-			}
-			set
-			{
-				if ((this._ups != value))
-				{
-					this._ups = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_downs", DbType="BigInt NOT NULL")]
-		public long downs
-		{
-			get
-			{
-				return this._downs;
-			}
-			set
-			{
-				if ((this._downs != value))
-				{
-					this._downs = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_collectcount", DbType="BigInt NOT NULL")]
-		public long collectcount
-		{
-			get
-			{
-				return this._collectcount;
-			}
-			set
-			{
-				if ((this._collectcount != value))
-				{
-					this._collectcount = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_themeid", DbType="Int NOT NULL")]
-		public int themeid
-		{
-			get
-			{
-				return this._themeid;
-			}
-			set
-			{
-				if ((this._themeid != value))
-				{
-					this._themeid = value;
-				}
 			}
 		}
 	}
@@ -2083,6 +1879,308 @@ namespace EasyBB
 					this._avatar = value;
 					this.SendPropertyChanged("avatar");
 					this.OnavatarChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Posts")]
+	public partial class Posts : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _id;
+		
+		private string _content;
+		
+		private int _level;
+		
+		private int _userid;
+		
+		private int _borderid;
+		
+		private System.DateTime _addtime;
+		
+		private int _status;
+		
+		private long _ups;
+		
+		private long _downs;
+		
+		private long _collectcount;
+		
+		private int _themeid;
+		
+    #region 可扩展性方法定义
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnidChanging(int value);
+    partial void OnidChanged();
+    partial void OncontentChanging(string value);
+    partial void OncontentChanged();
+    partial void OnlevelChanging(int value);
+    partial void OnlevelChanged();
+    partial void OnuseridChanging(int value);
+    partial void OnuseridChanged();
+    partial void OnborderidChanging(int value);
+    partial void OnborderidChanged();
+    partial void OnaddtimeChanging(System.DateTime value);
+    partial void OnaddtimeChanged();
+    partial void OnstatusChanging(int value);
+    partial void OnstatusChanged();
+    partial void OnupsChanging(long value);
+    partial void OnupsChanged();
+    partial void OndownsChanging(long value);
+    partial void OndownsChanged();
+    partial void OncollectcountChanging(long value);
+    partial void OncollectcountChanged();
+    partial void OnthemeidChanging(int value);
+    partial void OnthemeidChanged();
+    #endregion
+		
+		public Posts()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int id
+		{
+			get
+			{
+				return this._id;
+			}
+			set
+			{
+				if ((this._id != value))
+				{
+					this.OnidChanging(value);
+					this.SendPropertyChanging();
+					this._id = value;
+					this.SendPropertyChanged("id");
+					this.OnidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_content", DbType="NText NOT NULL", CanBeNull=false, UpdateCheck=UpdateCheck.Never)]
+		public string content
+		{
+			get
+			{
+				return this._content;
+			}
+			set
+			{
+				if ((this._content != value))
+				{
+					this.OncontentChanging(value);
+					this.SendPropertyChanging();
+					this._content = value;
+					this.SendPropertyChanged("content");
+					this.OncontentChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="[level]", Storage="_level", DbType="Int NOT NULL")]
+		public int level
+		{
+			get
+			{
+				return this._level;
+			}
+			set
+			{
+				if ((this._level != value))
+				{
+					this.OnlevelChanging(value);
+					this.SendPropertyChanging();
+					this._level = value;
+					this.SendPropertyChanged("level");
+					this.OnlevelChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_userid", DbType="Int NOT NULL")]
+		public int userid
+		{
+			get
+			{
+				return this._userid;
+			}
+			set
+			{
+				if ((this._userid != value))
+				{
+					this.OnuseridChanging(value);
+					this.SendPropertyChanging();
+					this._userid = value;
+					this.SendPropertyChanged("userid");
+					this.OnuseridChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_borderid", DbType="Int NOT NULL")]
+		public int borderid
+		{
+			get
+			{
+				return this._borderid;
+			}
+			set
+			{
+				if ((this._borderid != value))
+				{
+					this.OnborderidChanging(value);
+					this.SendPropertyChanging();
+					this._borderid = value;
+					this.SendPropertyChanged("borderid");
+					this.OnborderidChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_addtime", DbType="DateTime NOT NULL")]
+		public System.DateTime addtime
+		{
+			get
+			{
+				return this._addtime;
+			}
+			set
+			{
+				if ((this._addtime != value))
+				{
+					this.OnaddtimeChanging(value);
+					this.SendPropertyChanging();
+					this._addtime = value;
+					this.SendPropertyChanged("addtime");
+					this.OnaddtimeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_status", DbType="Int NOT NULL")]
+		public int status
+		{
+			get
+			{
+				return this._status;
+			}
+			set
+			{
+				if ((this._status != value))
+				{
+					this.OnstatusChanging(value);
+					this.SendPropertyChanging();
+					this._status = value;
+					this.SendPropertyChanged("status");
+					this.OnstatusChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ups", DbType="BigInt NOT NULL")]
+		public long ups
+		{
+			get
+			{
+				return this._ups;
+			}
+			set
+			{
+				if ((this._ups != value))
+				{
+					this.OnupsChanging(value);
+					this.SendPropertyChanging();
+					this._ups = value;
+					this.SendPropertyChanged("ups");
+					this.OnupsChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_downs", DbType="BigInt NOT NULL")]
+		public long downs
+		{
+			get
+			{
+				return this._downs;
+			}
+			set
+			{
+				if ((this._downs != value))
+				{
+					this.OndownsChanging(value);
+					this.SendPropertyChanging();
+					this._downs = value;
+					this.SendPropertyChanged("downs");
+					this.OndownsChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_collectcount", DbType="BigInt NOT NULL")]
+		public long collectcount
+		{
+			get
+			{
+				return this._collectcount;
+			}
+			set
+			{
+				if ((this._collectcount != value))
+				{
+					this.OncollectcountChanging(value);
+					this.SendPropertyChanging();
+					this._collectcount = value;
+					this.SendPropertyChanged("collectcount");
+					this.OncollectcountChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_themeid", DbType="Int NOT NULL")]
+		public int themeid
+		{
+			get
+			{
+				return this._themeid;
+			}
+			set
+			{
+				if ((this._themeid != value))
+				{
+					this.OnthemeidChanging(value);
+					this.SendPropertyChanging();
+					this._themeid = value;
+					this.SendPropertyChanged("themeid");
+					this.OnthemeidChanged();
 				}
 			}
 		}

@@ -1,0 +1,111 @@
+﻿@model List<Thems>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var board = ViewBag.Board as Board;
+    ViewBag.Title = board.name;
+    int total = ViewBag.Total;//总的记录数
+    int rows = 5;//一页显示多少条
+    int number = 7;//分页条页码长度-需要奇数
+
+    //计算出一共有多少页
+    int pages = (int)(Math.Ceiling(total / (rows * 1.0)));
+
+    //当前是第几页
+    int cPage = 0;
+    int.TryParse(Request.QueryString["p"] ?? "1", out cPage);
+    cPage = cPage <= 0 ? 1 : cPage;
+    cPage = cPage >= pages ? pages : cPage;
+}
+
+<div class="row">
+    <div class="col-md-10">
+        <h2>板块名称：@board.name</h2>
+        <p>介绍：@board.intro</p>
+    </div>
+    <div class="col-md-2" style="text-align:right;">
+        <h1></h1>
+        <h1></h1>
+        <a class="btn btn-primary" href="/theme/add/@board.id">新增主题</a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <table class="table">
+            <caption>主题列表</caption>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>标题</th>
+                    <th>发帖人</th>
+                    <th>日期</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 0; i < Model.Count; i++)
+                {
+                    <tr>
+                        <th scope="row">@(i + 1)</th>
+                        <td><a href="/theme/Detail/@Model[i].id">@Model[i].title</a></td>
+                        <td>user100</td>
+                        <td>@Model[i].addtime.ToString()</td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<nav aria-label="Page navigation">
+    <ul class="pagination">
+
+        <li @(cPage == 1 ? "class=disabled" : "")>
+            <a href="?p=@(cPage-1)" aria-label="Previous">
+                <span aria-hidden="true">上一页</span>
+            </a>
+        </li>
+        <li @(cPage == 1 ? "class=disabled" : "")><a href="?p=1">首页</a></li>
+
+        @if (pages <= number)
+        {
+            for (int i = 0; i < pages; i++)
+            {
+                <li @((i + 1) == cPage ? "class=active" : "")><a href="?p=@(i+1)">@(i + 1)</a></li>
+            }
+        }
+        else
+        {
+            if (cPage < (number + 1) / 2)
+            {
+                for (int i = 0; i < number; i++)
+                {
+                    <li @((i + 1) == cPage ? "class=active" : "")><a href="?p=@(i+1)">@(i + 1)</a></li>
+                }
+            }
+            else if (cPage > pages - (number - 1) / 2)
+            {
+                for (int i = pages - number; i < pages; i++)
+                {
+                    <li @((i + 1) == cPage ? "class=active" : "")><a href="?p=@(i+1)">@(i + 1)</a></li>
+                }
+            }
+            else
+            {
+                for (int i = cPage - (number + 1) / 2; i < cPage + (number - 1) / 2; i++)
+                {
+                    <li @((i + 1) == cPage ? "class=active" : "")><a href="?p=@(i+1)">@(i + 1)</a></li>
+                }
+            }
+        }
+
+
+        <li @(cPage == pages ? "class=disabled" : "")><a href="?p=@pages">尾页</a></li>
+        <li @(cPage == pages ? "class=disabled" : "")>
+            <a href="?p=@(cPage+1)" aria-label="Next">
+                <span aria-hidden="true">下一页</span>
+            </a>
+        </li>
+    </ul>
+</nav>

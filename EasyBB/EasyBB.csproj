@@ -235,6 +235,7 @@
     <Content Include="Views\Admin\BoardList.cshtml" />
     <Content Include="Views\Home\Board.cshtml" />
     <Content Include="Views\Theme\Add.cshtml" />
+    <Content Include="Views\Theme\Detail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\font-awesome-4.7.0\" />

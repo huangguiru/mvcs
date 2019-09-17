@@ -35,21 +35,6 @@
       <Column Name="addtime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
     </Type>
   </Table>
-  <Table Name="dbo.Posts" Member="Posts">
-    <Type Name="Posts">
-      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="content" Type="System.String" DbType="NText NOT NULL" CanBeNull="false" UpdateCheck="Never" />
-      <Column Name="[level]" Member="level" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="userid" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="borderid" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="addtime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
-      <Column Name="status" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="ups" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
-      <Column Name="downs" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
-      <Column Name="collectcount" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
-      <Column Name="themeid" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-    </Type>
-  </Table>
   <Table Name="dbo.Thems" Member="Thems">
     <Type Name="Thems">
       <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -101,6 +86,21 @@
       <Column Name="themescount" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
       <Column Name="postcount" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
       <Column Name="avatar" Type="System.String" DbType="NVarChar(150) NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Posts" Member="Posts">
+    <Type Name="Posts">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="content" Type="System.String" DbType="NText NOT NULL" CanBeNull="false" UpdateCheck="Never" />
+      <Column Name="[level]" Member="level" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="userid" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="borderid" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="addtime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="status" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ups" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="downs" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="collectcount" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="themeid" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
     </Type>
   </Table>
 </Database>

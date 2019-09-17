@@ -15,6 +15,7 @@ namespace EasyBB.Controllers
         }
         public ActionResult Board(int id,int p=1)
         {
+            p = p < 0 ? 1 : p;
             var list = linqHelper.GetListByPage<Thems>(p,5);
             ViewBag.Board = linqHelper.GetEntity<Board>(m => m.id == id);
             ViewBag.Total = linqHelper.Count<Thems>();

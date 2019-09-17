@@ -1,0 +1,103 @@
+﻿@model List<Posts>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var thems = ViewBag.Thems as Thems;
+    ViewBag.Title =thems.title;
+    int total = ViewBag.Total;//总的记录数
+    int rows = 5;//一页显示多少条
+    int number = 7;//分页条页码长度-需要奇数
+
+    //计算出一共有多少页
+    int pages = (int)(Math.Ceiling(total / (rows * 1.0)));
+
+    //当前是第几页
+    int cPage = 0;
+    int.TryParse(Request.QueryString["p"] ?? "1", out cPage);
+    cPage = cPage <= 0 ? 1 : cPage;
+    cPage = cPage >= pages ? pages : cPage;
+}
+<h2>@thems.title</h2>
+<p>@thems.content</p>
+
+
+<div class="row">
+    
+                @for (int i = 0; i < Model.Count; i++)
+                {
+                   <div class="col-md-12" style="border:1px solid
+    #ccc;padding:8px;margin-bottom:5px;">
+                       <a href="/Posts/Detail/@Model[i].id">@Model[i].content</a>
+                   </div>   
+                }
+</div>
+
+<nav aria-label="Page navigation">
+    <ul class="pagination">
+
+        <li @(cPage == 1 ? "class=disabled" : "")>
+            <a href="?p=@(cPage-1)" aria-label="Previous">
+                <span aria-hidden="true">上一页</span>
+            </a>
+        </li>
+        <li @(cPage == 1 ? "class=disabled" : "")><a href="?p=1">首页</a></li>
+
+        @if (pages <= number)
+        {
+            for (int i = 0; i < pages; i++)
+            {
+                <li @((i + 1) == cPage ? "class=active" : "")><a href="?p=@(i+1)">@(i + 1)</a></li>
+            }
+        }
+        else
+        {
+            if (cPage < (number + 1) / 2)
+            {
+                for (int i = 0; i < number; i++)
+                {
+                    <li @((i + 1) == cPage ? "class=active" : "")><a href="?p=@(i+1)">@(i + 1)</a></li>
+                }
+            }
+            else if (cPage > pages - (number - 1) / 2)
+            {
+                for (int i = pages - number; i < pages; i++)
+                {
+                    <li @((i + 1) == cPage ? "class=active" : "")><a href="?p=@(i+1)">@(i + 1)</a></li>
+                }
+            }
+            else
+            {
+                for (int i = cPage - (number + 1) / 2; i < cPage + (number - 1) / 2; i++)
+                {
+                    <li @((i + 1) == cPage ? "class=active" : "")><a href="?p=@(i+1)">@(i + 1)</a></li>
+                }
+            }
+        }
+
+
+        <li @(cPage == pages ? "class=disabled" : "")><a href="?p=@pages">尾页</a></li>
+        <li @(cPage == pages ? "class=disabled" : "")>
+            <a href="?p=@(cPage+1)" aria-label="Next">
+                <span aria-hidden="true">下一页</span>
+            </a>
+        </li>
+    </ul>
+</nav>
+
+<textarea id="postcontent" style="width:700px;height:350px;max-width:700px;" class="form-control"></textarea>
+<br />
+<input class="btn btn-default" type="button" value="提交" onclick="doPost()" />
+<script>
+    function doPost()
+    {
+        var content = $('#postcontent').val();
+              $.post("../SavePosts", { "content": content, "tid": @thems.id },
+                  function (data) {
+                      if (data.res > 1) {
+                          alert('保存成功。');
+                      }
+                      else {
+                          alert('操作失败。');
+                      }
+                  }, "json");
+    }
+</script>
